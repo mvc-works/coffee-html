@@ -18,6 +18,14 @@ Originally parsted on Gist: https://gist.github.com/2498711
 After a long time, I found it was almost what I wanted.  
 So I will make it a repo, hope it helps.  
 
+### Referece and Thanks
+
+I used `highlight.js` to highlight my CoffeeScript source code:  
+https://github.com/isagalaev/highlight.js
+
+And `pagedown` to render README file into HTML:  
+http://code.google.com/p/pagedown/wiki/PageDown
+
 ### License
 
 MIT

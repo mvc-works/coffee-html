@@ -62,7 +62,7 @@ window.onload = function() {
         id: "source"
       }, this.code({
         "class": "coffeescript"
-      }, this.text(res.target.response))));
+      }, this.html(res.target.response))));
     });
     (q("#code")).insertAdjacentHTML("beforeend", block);
     return hljs.highlightBlock((q("#code")).querySelector("pre"));

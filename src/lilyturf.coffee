@@ -15,7 +15,12 @@ lilyturf =
       attrs = ""
       for key, value of obj then attrs += " #{key}='#{value}'"
       attrs
-    text: (text) -> text
+    text: (text) ->
+      text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/ /,"&nbsp;")
     html: (html) -> html
 
   dom_way:

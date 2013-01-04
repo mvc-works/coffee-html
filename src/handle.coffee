@@ -56,7 +56,7 @@ window.onload = ->
           @text "This is all my code for implementing Lilyturf:"
         @pre id: "source",
           @code class: "coffeescript",
-            @text res.target.response
+            @html res.target.response
     (q "#code").insertAdjacentHTML "beforeend", block
     hljs.highlightBlock (q "#code").querySelector("pre")
 
