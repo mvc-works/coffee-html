@@ -23,7 +23,6 @@ disqus_js = """
 pop = -> alert "alert called by event!"
 
 window.onload = ->
-  converter = new Markdown.Converter()
 
   document.body.insertAdjacentHTML "beforeend", lilyturf.html ->
     @div class: "main-title",
@@ -32,15 +31,16 @@ window.onload = ->
   document.body.insertAdjacentHTML "beforeend", lilyturf.html ->
     @div class: "method",
       @p class: "bold", (@text "This is generated in HTML way")
-      @p {}, (@text "This is my way generating HTML in the runtime of CoffeeScript.")
-      @p {}, (@text "JavaScript is a language born to deal with HTML, and it should be.")
-      @p {}, (@text "So, just integrate HTML's syntax into CoffeeScript.")
+      # three ways below are all OK, I recommand the last one though..
+      @p "This is my way generating HTML in the runtime of CoffeeScript."
+      @p {}, "JavaScript is a language born to deal with HTML, and it should be."
+      @p {}, (@text "So, let's generate HTML with CoffeeScript.")
 
   document.body.appendChild lilyturf.dom ->
     @div class: "method",
       @p class: "bold", (@text "This is generated in DOM way")
       @p id: "click", onclick: pop, (@text "The DOM version allow click events, please click!")
-      @p {}, (@text "Read the files below if you cant more details.")
+      @p {}, (@text "Read the following files for more details.")
       @a href: "https://github.com/jiyinyiyong/lilyturf",
         @text "And here's the link to it's repo."
 
@@ -54,7 +54,7 @@ window.onload = ->
     block = lilyturf.html ->
       @div {},
         @div class: "intro",
-          @text "This is all my code for implementing Lilyturf:"
+          @text "This is the code implementing Lilyturf:"
         @pre id: "source",
           @code class: "coffeescript",
             @html res.target.response
@@ -98,8 +98,11 @@ window.onload = ->
         @div class: "intro",
           @text "The readme file:"
         @pre id: "readme",
-          @html converter.makeHtml res.target.response
+          @html (marked res.target.response)
     (q "#code").appendChild block
+    for one in block.querySelectorAll("pre pre")
+      one.firstChild.className = "coffeescript"
+      hljs.highlightBlock one
 
   document.body.appendChild lilyturf.dom ->
     @div id: "disqus_thread",

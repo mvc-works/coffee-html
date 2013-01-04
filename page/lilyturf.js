@@ -16,7 +16,7 @@ lilyturf = {
       return attrs;
     },
     text: function(text) {
-      return text;
+      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\s/g, "&nbsp;");
     },
     html: function(html) {
       return html;
@@ -52,13 +52,18 @@ lilyturf = {
       return self[tag] = function() {
         var list, obj;
         obj = arguments[0], list = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+        if (obj.__proto__ !== Object.prototype) {
+          list.unshift(obj);
+          obj = {};
+        }
         return "<" + tag + (self.attrs(obj)) + ">" + (list.join("")) + "</" + tag + ">";
       };
     });
     return this.single_elems.map(function(tag) {
-      return self[tag] = function() {
-        var list, obj;
-        obj = arguments[0], list = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      return self[tag] = function(obj) {
+        if (obj == null) {
+          obj = {};
+        }
         return "<" + tag + (self.attrs(obj)) + "/>";
       };
     });
@@ -71,6 +76,10 @@ lilyturf = {
       return self[tag] = function() {
         var elem, list, obj;
         obj = arguments[0], list = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+        if (obj.__proto__ !== Object.prototype) {
+          list.unshift(obj);
+          obj = {};
+        }
         elem = document.createElement(tag);
         self.attrs(obj, elem);
         list.forEach(function(child) {

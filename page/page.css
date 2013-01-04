@@ -32,15 +32,17 @@ pre {
 }
 .bold {
   margin: 10px 0px;
+  font-weight: bold;
 }
 p {
   margin: 0px;
+  line-height: 26px;
 }
 #readme {
   padding: 10px;
 }
 #readme p {
-  line-height: 10px;
+  line-height: 22px;
 }
 #readme h1 {
   font-size: 20px;

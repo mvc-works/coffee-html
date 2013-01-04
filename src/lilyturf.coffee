@@ -20,7 +20,7 @@ lilyturf =
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
-        .replace(/ /,"&nbsp;")
+        .replace(/\s/g,"&nbsp;")
     html: (html) -> html
 
   dom_way:
@@ -39,9 +39,12 @@ lilyturf =
     self = @html_way
     @pair_elems.map (tag) ->
       self[tag] = (obj, list...) ->
+        unless obj.__proto__ is Object.prototype
+          list.unshift obj
+          obj = {}
         "<#{tag}#{self.attrs obj}>#{list.join("")}</#{tag}>"
     @single_elems.map (tag) ->
-      self[tag] = (obj, list...) ->
+      self[tag] = (obj={}) ->
         "<#{tag}#{self.attrs obj}/>"
 
   prepare_dom: ->
@@ -49,6 +52,9 @@ lilyturf =
     all = @pair_elems.concat @single_elems
     all.map (tag) ->
       self[tag] = (obj, list...) ->
+        unless obj.__proto__ is Object.prototype
+          list.unshift obj
+          obj = {}
         elem = document.createElement tag
         self.attrs obj, elem
         list.forEach (child) -> elem.appendChild child
