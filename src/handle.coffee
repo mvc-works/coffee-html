@@ -40,8 +40,9 @@ window.onload = ->
     @div class: "method",
       @p class: "bold", (@text "This is generated in DOM way")
       @p id: "click", onclick: pop, (@text "The DOM version allow click events, please click!")
-      @p {}, (@text "")
-      @p {}, (@text "")
+      @p {}, (@text "Read the files below if you cant more details.")
+      @a href: "https://github.com/jiyinyiyong/lilyturf",
+        @text "And here's the link to it's repo."
 
   document.body.appendChild lilyturf.dom ->
     @div id: "code"

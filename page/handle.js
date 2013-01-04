@@ -43,7 +43,9 @@ window.onload = function() {
     }, this.text("This is generated in DOM way")), this.p({
       id: "click",
       onclick: pop
-    }, this.text("The DOM version allow click events, please click!")), this.p({}, this.text("")), this.p({}, this.text("")));
+    }, this.text("The DOM version allow click events, please click!")), this.p({}, this.text("Read the files below if you cant more details.")), this.a({
+      href: "https://github.com/jiyinyiyong/lilyturf"
+    }, this.text("And here's the link to it's repo.")));
   }));
   document.body.appendChild(lilyturf.dom(function() {
     return this.div({

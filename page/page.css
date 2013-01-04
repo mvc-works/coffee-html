@@ -54,3 +54,6 @@ p {
 #click {
   background: #fad1d1;
 }
+a {
+  text-decoration: none;
+}
