@@ -41,6 +41,7 @@ lilyturf =
       self[tag] = (obj, list...) ->
         unless obj.__proto__ is Object.prototype
           list.unshift obj
+          list = list.filter (elem) -> elem?
           obj = {}
         "<#{tag}#{self.attrs obj}>#{list.join("")}</#{tag}>"
     @single_elems.map (tag) ->
@@ -57,7 +58,8 @@ lilyturf =
           obj = {}
         elem = document.createElement tag
         self.attrs obj, elem
-        list.forEach (child) -> elem.appendChild child
+        list.forEach (child) ->
+          if child? then elem.appendChild child
         elem
 
   html: (f) ->

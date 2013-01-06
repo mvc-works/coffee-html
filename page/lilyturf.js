@@ -54,6 +54,9 @@ lilyturf = {
         obj = arguments[0], list = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
         if (obj.__proto__ !== Object.prototype) {
           list.unshift(obj);
+          list = list.filter(function(elem) {
+            return elem != null;
+          });
           obj = {};
         }
         return "<" + tag + (self.attrs(obj)) + ">" + (list.join("")) + "</" + tag + ">";
@@ -83,7 +86,9 @@ lilyturf = {
         elem = document.createElement(tag);
         self.attrs(obj, elem);
         list.forEach(function(child) {
-          return elem.appendChild(child);
+          if (child != null) {
+            return elem.appendChild(child);
+          }
         });
         return elem;
       };
