@@ -1,6 +1,16 @@
 
 # Lilyturf is a simple template engine for CoffeeScript
 
+### Install
+
+You can install Lilyturf with Bower:
+
+```bash
+bower install lilyturf
+```
+
+The main file is `page/lilyturf.js`.
+
 ### Usage
 
 Source `page/lilyturf.js` in your HTML with `<script>` to start.  
@@ -58,4 +68,4 @@ https://github.com/chjj/marked
 
 ### License
 
-MIT
+BSD
