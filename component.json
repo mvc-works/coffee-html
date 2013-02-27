@@ -1,6 +1,6 @@
 {
   "name": "lilyturf",
-  "description": "Concise DOM templating tool for CoffeeScript",
-  "version": "0.0.1",
+  "description": "Simple template engine for CoffeeScript",
+  "version": "0.1.0",
   "main": "page/lilyturf.js"
 }

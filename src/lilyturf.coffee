@@ -35,14 +35,24 @@ lilyturf =
       div.innerHTML = html
       div
 
+  resolve: (list) ->
+    obj = {}
+    elem = []
+    list.forEach (item) ->
+      if item?
+        if item.__proto__ is Object.prototype
+          obj[key] = value for key, value of item
+        else if item.__proto__ is Array.prototype
+          elem.push that for that in item
+        else elem.push item
+    [obj, elem]
+
   prepare_html: ->
     self = @html_way
+    resolve = @resolve
     @pair_elems.map (tag) ->
-      self[tag] = (obj, list...) ->
-        unless obj.__proto__ is Object.prototype
-          list.unshift obj
-          list = list.filter (elem) -> elem?
-          obj = {}
+      self[tag] = (list...) ->
+        [obj, list] = resolve list
         "<#{tag}#{self.attrs obj}>#{list.join("")}</#{tag}>"
     @single_elems.map (tag) ->
       self[tag] = (obj={}) ->
@@ -50,16 +60,18 @@ lilyturf =
 
   prepare_dom: ->
     self = @dom_way
+    resolve = @resolve
     all = @pair_elems.concat @single_elems
     all.map (tag) ->
-      self[tag] = (obj, list...) ->
-        unless obj.__proto__ is Object.prototype
-          list.unshift obj
-          obj = {}
+      self[tag] = (list...) ->
+        [obj, list] = resolve list
         elem = document.createElement tag
         self.attrs obj, elem
         list.forEach (child) ->
-          if child? then elem.appendChild child
+          if child?
+            if typeof child in ['string', "number"]
+              elem.appendChild (self.text child)
+            else elem.appendChild child
         elem
 
   html: (f) ->
@@ -73,4 +85,4 @@ lilyturf =
     self.f()
 
 lilyturf.prepare_html()
-if document? then lilyturf.prepare_dom()
+if window?.document? then lilyturf.prepare_dom()

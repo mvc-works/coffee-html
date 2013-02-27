@@ -13,9 +13,9 @@ The main file is `page/lilyturf.js`.
 
 ### Usage
 
-Source `page/lilyturf.js` in your HTML with `<script>` to start.  
+Include `page/lilyturf.js` in your HTML with `<script>` to start.  
 Here's a demo for Chrome users: http://jiyinyiyong.github.com/lilyturf/page  
-I've only tested it in Chrome. Be careful if you want to use.  
+I've only tested it in Chrome. Be careful in other browers.  
 
 After the script loaded, you will get a `lilyturf` Object with two methods:
 
@@ -42,6 +42,32 @@ lilyturf.dom ->
     @div {class: "b"},
       @html: "html is string but not being escaped"
 # this one returns a `<div>` DOM element.
+```
+
+I added some syntax sugars which you may read them in the tests:  
+
+```coffee
+do test = ->
+  lily = lilyturf
+  log = -> console.log arguments...
+  data =
+    1: -> @div "test"
+    2: -> "string"
+    3: -> @div {}, "code"
+    4: -> @div {id: "name"}, "code"
+    5: -> @div {},
+      if yes then @div "yes"
+      if no then @div "no"
+    6: -> @div {},
+      @div "item #{i}" for i in [1,2,3,4]
+      {class: "for loop"}
+      undefined
+    7: -> @div {},
+      @div i for i in [1,2,3,4]
+
+  for key, item of data
+    log (lily.dom item)
+    log (lily.html item)
 ```
 
 Notice that it's different for them to deal with events.  
