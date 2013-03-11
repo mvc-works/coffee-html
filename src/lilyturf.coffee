@@ -86,6 +86,54 @@ do ->
       self.f = f
       self.f()
 
+    css_way:
+      template: (base, selector, declaration) ->
+        "#{base} #{selector}: {\n#{declaration}\n}\n"
+      utils:
+        hsl: (h, s, l) -> "hsl(#{h}, #{s}%, #{l}%)"
+        hsla: (h, s, l, a) -> "hsl(#{h}, #{s}%, #{l}%, #{a})"
+
+    css: (generator) ->
+      self = @css_way
+      style = ""
+      self.utils.generator = generator
+      data = self.utils.generator()
+      log data
+      type = (value) ->
+        match = Object::toString.call(value).match(/\s\w+/)
+        string = match[0][1..]
+        string.toLowerCase()
+
+      write_rule = (base, data) ->
+        plain = []
+        nested = {}
+
+        for selector, declaration of data
+          for attribute, value of declaration
+            if (type value) is "object"
+              nest_selector = "#{base} #{selector}"
+              nest_data = {}
+              nest_data[attribute] = value
+              nested[nest_selector] = nest_data
+            else
+              translate = (char) ->
+                  if char.match(/^[A-Z]$/)?
+                    "-" + char.toLowerCase()
+                  else char
+              attribute = attribute.split("").map(translate).join("")
+              plain.push "#{attribute}: #{value};"
+        if plain.length > 0
+          declaration = plain.join "\n"
+          rule = self.template base, selector, declaration
+          # log "====", rule, data, "===="
+          style += rule.trimLeft()
+        if (Object.keys nested).length > 0
+          for base, data of nested
+            write_rule base, data
+
+      write_rule "", data
+      style
+
   lilyturf.prepare_html()
   if window?.document? then lilyturf.prepare_dom()
 

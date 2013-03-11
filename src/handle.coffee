@@ -27,7 +27,7 @@ get = (path, call) ->
   req.onload = call
   req.send()
 
-window.onload = ->
+window.onload2 = ->
 
   document.body.insertAdjacentHTML "beforeend", lilyturf.html ->
     @div class: "main-title",
@@ -114,3 +114,14 @@ window.onload = ->
     for key, item of data
       log (lily.dom item)
       log (lily.html item)
+
+window.onload = ->
+
+    log "%%%%%%%%%%%%% test css %%%%%%%%%%%%"
+
+    log lilyturf.css ->
+      selector:
+        attribute: "value"
+        nest:
+          nest_attribute: "nest_value"
+          color: @hsl 1, 2, 3
