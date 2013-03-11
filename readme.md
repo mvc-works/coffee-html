@@ -44,6 +44,23 @@ lilyturf.dom ->
 # this one returns a `<div>` DOM element.
 ```
 
+And a exprimental CSS template:
+
+```coffee
+lilyturf.css ->
+  body:
+    padding: 0
+    color: @hsl 10, 10, 80
+
+    p:
+      display: ["-webkit-box", "-moz-box"]
+
+      a:
+        color: "hsl(0,0%,80%)"
+  pre:
+    display: "none"
+```
+
 I added some syntax sugars which you may read them in the tests:  
 
 ```coffee
@@ -91,6 +108,10 @@ https://github.com/isagalaev/highlight.js
 
 And `marked` to render `readme.md` into HTML:  
 https://github.com/chjj/marked
+
+The CSS template is inspired by `ccss` and `coffee-css`:  
+https://github.com/khoomeister/coffee-css/blob/master/src/coffee-css.coffee  
+https://github.com/aeosynth/ccss/blob/master/src/ccss.coffee
 
 ### License
 
