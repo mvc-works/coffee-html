@@ -121,21 +121,17 @@ var __slice = [].slice;
         };
       });
     },
-    html: function(f) {
-      var self;
-      self = this.html_way;
-      self.f = f;
-      return self.f();
+    html: function(generator) {
+      this.html_way.generator = generator;
+      return this.html_way.generator();
     },
-    dom: function(f) {
-      var self;
-      self = this.dom_way;
-      self.f = f;
-      return self.f();
+    dom: function(generator) {
+      this.dom_way.generator = generator;
+      return this.dom_way.generator();
     },
     css_way: {
       template: function(base, selector, declaration) {
-        return "" + base + " " + selector + ": {\n" + declaration + "\n}\n";
+        return "" + base + " " + selector + "{\n" + declaration + "\n}\n";
       },
       utils: {
         hsl: function(h, s, l) {
@@ -144,51 +140,62 @@ var __slice = [].slice;
         hsla: function(h, s, l, a) {
           return "hsl(" + h + ", " + s + "%, " + l + "%, " + a + ")";
         }
-      }
-    },
-    css: function(generator) {
-      var data, self, style, type, write_rule;
-      self = this.css_way;
-      style = "";
-      self.utils.generator = generator;
-      data = self.utils.generator();
-      log(data);
-      type = function(value) {
+      },
+      type: function(value) {
         var match, string;
         match = Object.prototype.toString.call(value).match(/\s\w+/);
         string = match[0].slice(1);
         return string.toLowerCase();
-      };
+      },
+      pretty: function(char) {
+        if (char.match(/^[A-Z]$/) != null) {
+          return "-" + char.toLowerCase();
+        } else {
+          return char;
+        }
+      }
+    },
+    css: function(generator) {
+      var data, self, style, write_rule;
+      self = this.css_way;
+      style = "";
+      self.utils.generator = generator;
+      data = self.utils.generator();
       write_rule = function(base, data) {
-        var attribute, declaration, nest_data, nest_selector, nested, plain, rule, selector, translate, value, _results;
-        plain = [];
+        var attribute, declaration, nest_selector, nested, plain, rule, selector, value, values, _i, _len, _results;
         nested = {};
         for (selector in data) {
           declaration = data[selector];
+          plain = [];
           for (attribute in declaration) {
             value = declaration[attribute];
-            if ((type(value)) === "object") {
+            if ((self.type(value)) === "object") {
               nest_selector = "" + base + " " + selector;
-              nest_data = {};
-              nest_data[attribute] = value;
-              nested[nest_selector] = nest_data;
+              if (nested[nest_selector] == null) {
+                nested[nest_selector] = {};
+              }
+              nested[nest_selector][attribute] = value;
             } else {
-              translate = function(char) {
-                if (char.match(/^[A-Z]$/) != null) {
-                  return "-" + char.toLowerCase();
-                } else {
-                  return char;
+              attribute = attribute.split("").map(self.pretty).join("");
+              if ((self.type(value)) === "number") {
+                value = "" + value + "px";
+              }
+              if ((self.type(value)) === "array") {
+                values = value;
+                for (_i = 0, _len = values.length; _i < _len; _i++) {
+                  value = values[_i];
+                  plain.push("  " + attribute + ": " + value + ";");
                 }
-              };
-              attribute = attribute.split("").map(translate).join("");
-              plain.push("" + attribute + ": " + value + ";");
+              } else {
+                plain.push("  " + attribute + ": " + value + ";");
+              }
             }
           }
-        }
-        if (plain.length > 0) {
-          declaration = plain.join("\n");
-          rule = self.template(base, selector, declaration);
-          style += rule.trimLeft();
+          if (plain.length > 0) {
+            declaration = plain.join("\n");
+            rule = self.template(base, selector, declaration);
+            style += rule.trimLeft();
+          }
         }
         if ((Object.keys(nested)).length > 0) {
           _results = [];

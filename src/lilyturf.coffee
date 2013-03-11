@@ -76,60 +76,58 @@ do ->
               else elem.appendChild child
           elem
 
-    html: (f) ->
-      self = @html_way
-      self.f = f
-      self.f()
+    html: (generator) ->
+      @html_way.generator = generator
+      @html_way.generator()
 
-    dom: (f) ->
-      self = @dom_way
-      self.f = f
-      self.f()
+    dom: (generator) ->
+      @dom_way.generator = generator
+      @dom_way.generator()
 
     css_way:
       template: (base, selector, declaration) ->
-        "#{base} #{selector}: {\n#{declaration}\n}\n"
+        "#{base} #{selector}{\n#{declaration}\n}\n"
       utils:
         hsl: (h, s, l) -> "hsl(#{h}, #{s}%, #{l}%)"
         hsla: (h, s, l, a) -> "hsl(#{h}, #{s}%, #{l}%, #{a})"
+      type: (value) ->
+        match = Object::toString.call(value).match(/\s\w+/)
+        string = match[0][1..]
+        string.toLowerCase()
+      pretty: (char) ->
+        if char.match(/^[A-Z]$/)? then "-" + char.toLowerCase()
+        else char
 
     css: (generator) ->
       self = @css_way
       style = ""
       self.utils.generator = generator
       data = self.utils.generator()
-      log data
-      type = (value) ->
-        match = Object::toString.call(value).match(/\s\w+/)
-        string = match[0][1..]
-        string.toLowerCase()
 
       write_rule = (base, data) ->
-        plain = []
         nested = {}
 
         for selector, declaration of data
+          plain = []
           for attribute, value of declaration
-            if (type value) is "object"
+            if (self.type value) is "object"
               nest_selector = "#{base} #{selector}"
-              nest_data = {}
-              nest_data[attribute] = value
-              nested[nest_selector] = nest_data
+              nested[nest_selector] = {} unless nested[nest_selector]?
+              nested[nest_selector][attribute] = value
             else
-              translate = (char) ->
-                  if char.match(/^[A-Z]$/)?
-                    "-" + char.toLowerCase()
-                  else char
-              attribute = attribute.split("").map(translate).join("")
-              plain.push "#{attribute}: #{value};"
-        if plain.length > 0
-          declaration = plain.join "\n"
-          rule = self.template base, selector, declaration
-          # log "====", rule, data, "===="
-          style += rule.trimLeft()
+              attribute = attribute.split("").map(self.pretty).join("")
+              value = "#{value}px" if (self.type value) is "number"
+              if (self.type value) is "array"
+                values = value
+                for value in values
+                  plain.push "  #{attribute}: #{value};"
+              else plain.push "  #{attribute}: #{value};"
+          if plain.length > 0
+            declaration = plain.join "\n"
+            rule = self.template base, selector, declaration
+            style += rule.trimLeft()
         if (Object.keys nested).length > 0
-          for base, data of nested
-            write_rule base, data
+          write_rule base, data for base, data of nested
 
       write_rule "", data
       style

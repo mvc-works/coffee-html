@@ -27,7 +27,7 @@ get = (path, call) ->
   req.onload = call
   req.send()
 
-window.onload2 = ->
+window.onload = ->
 
   document.body.insertAdjacentHTML "beforeend", lilyturf.html ->
     @div class: "main-title",
@@ -93,7 +93,65 @@ window.onload2 = ->
         @text "comments powered by"
         @span class: "logo-disqus", "Disqus"
 
-  do test = ->
+  style = lilyturf.css ->
+    body:
+      width: 800
+      margin: "0px auto"
+      fontFamily: "Marcellus"
+
+    "@font-face":
+      fontFamily: "Marcellus"
+      src: "url(../font/Marcellus.woff) format(woff)"
+
+    "*":
+      boxSizing: "border-box"
+      MozBoxSizing: "border-box"
+
+    ".main-title":
+      fontSize: 30
+      textAlign: "center"
+      margin: "40px auto"
+
+    pre:
+      boxShadow: "0px 0px 6px #{@hsl 0, 0, 70}"
+      fontSize: 14
+      padding: 10
+      code:
+        fontFamily: "Monaco, monospace"
+
+    "#disqus_thread":
+      margin: "100px 0px 200px"
+
+    ".method":
+      margin: "20px 0px"
+
+    ".bold":
+      margin: "10px 0px"
+      fontWeight: "bold"
+
+    p:
+      margin: 0
+      lineHeight: 22
+
+    "#readme":
+      padding: 10
+      p:
+        lineHeight: 20
+      h1:
+        fontSize: 20
+      h3:
+        margin: "-10 0px"
+      code:
+        display: "inline-block"
+    "#click":
+      background: @hsl 0, 80, 90
+    a:
+      textDecoration: "none"
+
+  document.body.appendChild lilyturf.dom ->
+    @style style
+
+  test = ->
     lily = lilyturf
     log = -> console.log arguments...
     data =
@@ -114,14 +172,3 @@ window.onload2 = ->
     for key, item of data
       log (lily.dom item)
       log (lily.html item)
-
-window.onload = ->
-
-    log "%%%%%%%%%%%%% test css %%%%%%%%%%%%"
-
-    log lilyturf.css ->
-      selector:
-        attribute: "value"
-        nest:
-          nest_attribute: "nest_value"
-          color: @hsl 1, 2, 3

@@ -28,8 +28,8 @@ get = function(path, call) {
   return req.send();
 };
 
-window.onload2 = function() {
-  var test;
+window.onload = function() {
+  var style, test;
   document.body.insertAdjacentHTML("beforeend", lilyturf.html(function() {
     return this.div({
       "class": "main-title"
@@ -109,7 +109,75 @@ window.onload2 = function() {
       "class": "logo-disqus"
     }, "Disqus")));
   }));
-  return (test = function() {
+  style = lilyturf.css(function() {
+    return {
+      body: {
+        width: 800,
+        margin: "0px auto",
+        fontFamily: "Marcellus"
+      },
+      "@font-face": {
+        fontFamily: "Marcellus",
+        src: "url(../font/Marcellus.woff) format(woff)"
+      },
+      "*": {
+        boxSizing: "border-box",
+        MozBoxSizing: "border-box"
+      },
+      ".main-title": {
+        fontSize: 30,
+        textAlign: "center",
+        margin: "40px auto"
+      },
+      pre: {
+        boxShadow: "0px 0px 6px " + (this.hsl(0, 0, 70)),
+        fontSize: 14,
+        padding: 10,
+        code: {
+          fontFamily: "Monaco, monospace"
+        }
+      },
+      "#disqus_thread": {
+        margin: "100px 0px 200px"
+      },
+      ".method": {
+        margin: "20px 0px"
+      },
+      ".bold": {
+        margin: "10px 0px",
+        fontWeight: "bold"
+      },
+      p: {
+        margin: 0,
+        lineHeight: 22
+      },
+      "#readme": {
+        padding: 10,
+        p: {
+          lineHeight: 20
+        },
+        h1: {
+          fontSize: 20
+        },
+        h3: {
+          margin: "-10 0px"
+        },
+        code: {
+          display: "inline-block"
+        }
+      },
+      "#click": {
+        background: this.hsl(0, 80, 90)
+      },
+      a: {
+        textDecoration: "none"
+      }
+    };
+  });
+  document.body.appendChild(lilyturf.dom(function() {
+    return this.style(style);
+  }));
+  return test = function() {
     var data, item, key, lily, _results;
     lily = lilyturf;
     log = function() {
@@ -169,20 +237,5 @@ window.onload2 = function() {
       _results.push(log(lily.html(item)));
     }
     return _results;
-  })();
-};
-
-window.onload = function() {
-  log("%%%%%%%%%%%%% test css %%%%%%%%%%%%");
-  return log(lilyturf.css(function() {
-    return {
-      selector: {
-        attribute: "value",
-        nest: {
-          nest_attribute: "nest_value",
-          color: this.hsl(1, 2, 3)
-        }
-      }
-    };
-  }));
+  };
 };

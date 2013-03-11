@@ -12,7 +12,6 @@ d = __dirname
 queue = [
   "jade -O #{d}/page/ -wP #{d}/src/"
   "coffee -o #{d}/page/ -wbc #{d}/src/"
-  "stylus -o #{d}/page/ -w #{d}/src/"
   "doodle #{d}/page/"
 ]
 
