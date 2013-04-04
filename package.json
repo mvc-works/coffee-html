@@ -1,0 +1,28 @@
+{
+  "name": "lilyturf",
+  "version": "0.2.0",
+  "description": "a HMLT/CSS generator in CoffeeScript",
+  "main": "lilyturf.js",
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+    "coffeeify": "~0.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jiyinyiyong/lilyturf.git"
+  },
+  "keywords": [
+    "html",
+    "coffee-script"
+  ],
+  "author": "jiyinyiyong",
+  "license": "MIT",
+  "readmeFilename": "readme.md",
+  "gitHead": "38ea3520bd8317243db1d507570e935dc2f2fd45"
+}
