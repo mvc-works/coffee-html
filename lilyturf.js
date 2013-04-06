@@ -165,7 +165,6 @@ css = function(generator) {
 };
 
 exports.html = function(generator) {
-  console.log(html_scope);
   return generator.call(html_scope);
 };
 

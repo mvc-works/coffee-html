@@ -94,6 +94,5 @@ css = (generator) ->
   style
 
 exports.html = (generator) ->
-  console.log html_scope
   generator.call html_scope
 exports.css = (data) -> css data
