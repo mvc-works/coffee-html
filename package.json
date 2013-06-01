@@ -1,15 +1,15 @@
 {
   "name": "lilyturf",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "a HMLT/CSS generator in CoffeeScript",
   "main": "lilyturf.js",
   "directories": {
     "example": "example"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "coffeeify": "~0.3.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
