@@ -16,11 +16,14 @@ html_tools =
     for key, value of obj then attrs += " #{key}='#{value}'"
     attrs
   text: (text) ->
-    text
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/\s/g,"&nbsp;")
+    if text?
+      ''
+    else
+      text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/\s/g,"&nbsp;")
 
 resolve = (list) ->
   obj = {}
@@ -46,53 +49,5 @@ single_elems.map (tag) ->
 html_scope.html = (string) ->  string
 html_scope.text = html_tools.text
 
-css_tools =
-  template: (base, selector, declaration) ->
-    "#{base} #{selector}{\n#{declaration}\n}\n"
-  utils:
-    hsl: (h, s, l) -> "hsl(#{h}, #{s}%, #{l}%)"
-    hsla: (h, s, l, a) -> "hsl(#{h}, #{s}%, #{l}%, #{a})"
-  type: (value) ->
-    match = Object::toString.call(value).match(/\s\w+/)
-    string = match[0][1..]
-    string.toLowerCase()
-  pretty: (char) ->
-    if char.match(/^[A-Z]$/)? then "-" + char.toLowerCase()
-    else char
-
-css = (generator) ->
-  style = ""
-  css_tools.utils.generator = generator
-  data = css_tools.utils.generator()
-
-  write_rule = (base, data) ->
-    nested = {}
-
-    for selector, declaration of data
-      plain = []
-      for attribute, value of declaration
-        if (css_tools.type value) is "object"
-          nest_selector = "#{base} #{selector}"
-          nested[nest_selector] = {} unless nested[nest_selector]?
-          nested[nest_selector][attribute] = value
-        else
-          attribute = attribute.split("").map(css_tools.pretty).join("")
-          value = "#{value}px" if (css_tools.type value) is "number"
-          if (css_tools.type value) is "array"
-            values = value
-            for value in values
-              plain.push "  #{attribute}: #{value};"
-          else plain.push "  #{attribute}: #{value};"
-      if plain.length > 0
-        declaration = plain.join "\n"
-        rule = css_tools.template base, selector, declaration
-        style += rule.trimLeft()
-    if (Object.keys nested).length > 0
-      write_rule base, data for base, data of nested
-
-  write_rule "", data
-  style
-
 exports.html = (generator) ->
   generator.call html_scope
-exports.css = (data) -> css data

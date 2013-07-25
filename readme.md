@@ -14,38 +14,43 @@ npm install lilyturf
 Its syntax looks like:
 
 ```coffee
-{html, css} = require "lilyturf"
+{html} = require './lilyturf'
+{tidy} = require 'htmltidy'
+
+data =
+  lily: 'flower'
+  lilyturf: 'plant'
 
 page = html ->
-  @div class: "new",
-    @span id: "none", "x"
+  @div class: 'demo',
+    @div id: 'demo',
+      for name, type of data
+        @div class: 'content',
+          @text "#{name}: #{type}"
+    if data.others?
+      @div class: 'more', (@text data.others)
 
-style = css ->
-  "html":
-    "css": "red"
-    head:
-      fontSize: 10
-      color: @hsl 10, 20, 30
+tidy page, indent: yes, (err, new_page) ->
+  console.log new_page
 ```
 
-In `.html()`, `@` contains tag names as methods,  
-In `.css()`, `@` contains functions like `hsl` for convenience.  
+In `.html()`, `@` contains tag names as methods.
 
 ### Goal
 
-I hate crazy brackets, I hate enormous closing tags.  
-Let it be simple to template HTML in CoffeeScript!  
-JS is invented to handle web pages, why is templating so ugly in JS?!  
+I hate crazy brackets, I hate enormous closing tags.
+Let it be simple to template HTML in CoffeeScript!
+JS is invented to handle web pages, why is templating so ugly in JS?!
 
-Early prototype on Gist: https://gist.github.com/2498711  
-After a long time, I found it was almost what I was looking for.  
-Then I rewrite it and name it lilyturf.  
+Early prototype on Gist: https://gist.github.com/2498711
+After a long time, I found it was almost what I was looking for.
+Then I rewrite it and name it lilyturf.
 
 ### Referece and Thanks
 
-`Browserify` and `Coffeeify` are great tools!  
-https://github.com/substack/node-browserify  
-https://github.com/substack/coffeeify  
+`Browserify` and `Coffeeify` are great tools!
+https://github.com/substack/node-browserify
+https://github.com/substack/coffeeify
 
 ### License
 
