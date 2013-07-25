@@ -54,4 +54,4 @@ https://github.com/substack/coffeeify
 
 ### License
 
-BSD
+MIT
