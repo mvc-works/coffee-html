@@ -17,13 +17,13 @@ html_tools =
     attrs
   text: (text) ->
     if text?
-      ''
-    else
       text
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
         .replace(/\s/g,"&nbsp;")
+    else
+      ''
 
 resolve = (list) ->
   obj = {}

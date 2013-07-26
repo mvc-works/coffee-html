@@ -20,9 +20,9 @@ html_tools = {
   },
   text: function(text) {
     if (text != null) {
-      return '';
-    } else {
       return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\s/g, "&nbsp;");
+    } else {
+      return '';
     }
   }
 };
