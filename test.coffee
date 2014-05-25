@@ -1,9 +1,9 @@
 
-{html} = require './html'
+{html} = require './coffee/html'
 {tidy} = require 'htmltidy'
 
 data =
-  lily: 'flower'
+  rose: 'flower'
   lilyturf: 'plant'
 
 page = html ->

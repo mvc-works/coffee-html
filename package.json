@@ -1,9 +1,9 @@
 {
   "name": "coffee-html",
-  "version": "0.4.0",
-  "description": "a HMLT/CSS generator in CoffeeScript",
-  "main": "html.js",
-  "directories": {  },
+  "version": "0.4.2",
+  "description": "generate HTML in CoffeeScript",
+  "main": "js/html.js",
+  "directories": {},
   "dependencies": {},
   "devDependencies": {
     "htmltidy": "0.0.6"
@@ -21,6 +21,8 @@
   ],
   "author": "jiyinyiyong",
   "license": "MIT",
-  "readmeFilename": "README.md",
-  "gitHead": "38ea3520bd8317243db1d507570e935dc2f2fd45"
+  "bugs": {
+    "url": "https://github.com/jiyinyiyong/coffee-html/issues"
+  },
+  "homepage": "https://github.com/jiyinyiyong/coffee-html"
 }

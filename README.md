@@ -1,9 +1,6 @@
 
-Coffee-HTML is a simple template engine for CoffeeScript
+Coffee-HTML: generate HTML in CoffeeScript
 ------
-
-Trying to generate HTML from CoffeeScript syntax.
-Early prototype on Gist: https://gist.github.com/2498711
 
 ### Usage
 
@@ -16,11 +13,10 @@ npm install coffee-html
 Its syntax looks like:
 
 ```coffee
-{html} = require './html'
-{tidy} = require 'htmltidy'
+{html} = require 'coffee-html'
 
 data =
-  lily: 'flower'
+  rose: 'flower'
   lilyturf: 'plant'
 
 page = html ->
@@ -32,11 +28,24 @@ page = html ->
     if data.others?
       @div class: 'more', (@text data.others)
 
-tidy page, indent: yes, (err, new_page) ->
-  console.log new_page
+page # => generated HTML here
 ```
 
-In `.html()`, `@` contains tag names as methods.
+This package only supports tags that defined in the source code.
+Customized tags are not supported.
+
+### Changelog
+
+* `0.4.2`
+  * Refactor code from my early years
+  * Remove `__proto__`
+
+* `0.4.0`
+  * Previously named Liliturf, renamed to Coffee-HTML
+
+### Early ideas:
+
+A Gist: https://gist.github.com/2498711
 
 ### License
 
