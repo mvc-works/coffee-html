@@ -1,14 +1,11 @@
 {
-  "name": "lilyturf",
-  "version": "0.3.1",
+  "name": "coffee-html",
+  "version": "0.4.0",
   "description": "a HMLT/CSS generator in CoffeeScript",
-  "main": "lilyturf.js",
-  "directories": {
-    "example": "example"
-  },
+  "main": "html.js",
+  "directories": {  },
   "dependencies": {},
   "devDependencies": {
-    "coffeeify": "~0.3.0",
     "htmltidy": "0.0.6"
   },
   "scripts": {
@@ -16,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jiyinyiyong/lilyturf.git"
+    "url": "git://github.com/jiyinyiyong/coffee-html.git"
   },
   "keywords": [
     "html",
@@ -24,6 +21,6 @@
   ],
   "author": "jiyinyiyong",
   "license": "MIT",
-  "readmeFilename": "readme.md",
+  "readmeFilename": "README.md",
   "gitHead": "38ea3520bd8317243db1d507570e935dc2f2fd45"
 }

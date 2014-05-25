@@ -1,5 +1,5 @@
 
-{html} = require './lilyturf'
+{html} = require './html'
 {tidy} = require 'htmltidy'
 
 data =
